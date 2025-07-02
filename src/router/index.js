@@ -4,7 +4,6 @@ import AboutView from '@/views/AboutView.vue'
 import ProductList from '@/views/product/index.vue'
 import OrderView from '@/views/order/index.vue'
 import PaymentView from '@/views/PaymentView.vue'
-import ResultView from '@/views/ResultView.vue'
 
 const routes = [
     { path: '/', component: HomeView },
@@ -12,19 +11,23 @@ const routes = [
     { path: '/products', component: ProductList },
     { path: '/orders', component: OrderView },
     {
-        path: '/orders/create',
-        component: () => import('@/views/order/create.vue'),
-    },
-    {
         path: '/orders/:id',
         component: () => import('@/views/order/detail.vue'),
     },
     { path: '/payments', component: PaymentView },
     {
-        path: '/payments/:orderId',
+        path: '/payments/orders/:orderId',
         component: () => import('@/views/payment/index.vue'),
     },
-    { path: '/result', component: ResultView },
+    {
+        path: '/payments/orders/:orderId/result',
+        component: () => import('@/views/payment/result.vue'),
+    },
+    {
+        path: '/payment/result',
+        name: 'PaymentResult',
+        component: () => import('@/views/payment/result.vue')
+    }
 ]
 
 const router = createRouter({

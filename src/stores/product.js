@@ -9,10 +9,10 @@ export const useProductStore = defineStore('product', () => {
 
     async function loadProducts(page = 1, size = 20) {
         try {
-            const res = await fetchProducts(page, size)
-            products.value = res.data.products
-            totalPages.value = res.data.totalPages
-            currentPage.value = res.data.currentPage
+            const response = await fetchProducts(page, size)
+            products.value = response.data.products
+            totalPages.value = response.data.totalPages
+            currentPage.value = response.data.currentPage
         } catch (e) {
             console.error('상품 로딩 실패:', e)
         }

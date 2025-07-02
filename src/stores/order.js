@@ -21,7 +21,7 @@ export const useOrderStore = defineStore('order', () => {
     async function loadOrders(page = 1, size = 20, orderStatus = null) {
         try {
             const params = { page, size }
-            if (orderStatus) params.order_status = orderStatus
+            if (orderStatus) params.orderStatus = orderStatus
 
             const response = await fetchOrders(params)
             orders.value = response.data.orders
@@ -36,6 +36,7 @@ export const useOrderStore = defineStore('order', () => {
         try {
             const response = await fetchOrderById(orderId)
             selectedOrder.value = response.data
+            return response.data
         } catch (e) {
             console.error('주문 상세 조회 실패:', e)
         }

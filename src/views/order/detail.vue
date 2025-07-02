@@ -6,7 +6,7 @@
     <p>상품명: {{ order.productId }}</p>
     <p>금액: {{ formatPrice(order.totalAmount) }}</p>
     <p>수량: {{ order.quantity }}</p>
-    <p>상태: {{ order.status }}</p>
+    <p>상태: {{ order.orderStatus }}</p>
   </div>
 </template>
 

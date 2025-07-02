@@ -33,7 +33,6 @@
 import { onMounted } from 'vue'
 import { useOrderStore } from '@/stores/order'
 
-
 const store = useOrderStore()
 
 function nextPage() {
