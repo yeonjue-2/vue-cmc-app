@@ -1,33 +1,35 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import AboutView from '@/views/AboutView.vue'
 import ProductList from '@/views/product/index.vue'
 import OrderView from '@/views/order/index.vue'
-import PaymentView from '@/views/PaymentView.vue'
+import OrderDetailView from '@/views/order/detail.vue'
+import PaymentView from '@/views/payment/index.vue'
+import PaymentResultView from '@/views/payment/result.vue'
 
 const routes = [
     { path: '/', component: HomeView },
-    { path: '/about', component: AboutView },
     { path: '/products', component: ProductList },
-    { path: '/orders', component: OrderView },
     {
-        path: '/orders/:id',
-        component: () => import('@/views/order/detail.vue'),
-    },
-    { path: '/payments', component: PaymentView },
-    {
-        path: '/payments/orders/:orderId',
-        component: () => import('@/views/payment/index.vue'),
+        path: '/orders',
+        children: [
+            { path: '', component: OrderView },
+            { path: ':id', component: OrderDetailView },
+        ]
     },
     {
-        path: '/payments/orders/:orderId/result',
-        component: () => import('@/views/payment/result.vue'),
+        path: '/payments',
+        children: [
+            {
+                path: 'orders/:orderId',
+                component: PaymentView
+            },
+            {
+                path: 'result',
+                component: PaymentResultView,
+                props: route => ({ status: route.query.status}),
+            },
+        ]
     },
-    {
-        path: '/payment/result',
-        name: 'PaymentResult',
-        component: () => import('@/views/payment/result.vue')
-    }
 ]
 
 const router = createRouter({

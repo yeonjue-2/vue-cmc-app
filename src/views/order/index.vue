@@ -23,6 +23,7 @@
       </tr>
       </tbody>
     </table>
+    <paging></paging>
     <button @click="prevPage" :disabled="store.currentPage === 1">이전</button>
     <span>페이지 {{ store.currentPage }} / {{ store.totalPages }}</span>
     <button @click="nextPage" :disabled="store.currentPage + 1 >= store.totalPages">다음</button>
@@ -32,6 +33,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useOrderStore } from '@/stores/order'
+import Paging from "@/components/atom/Paging.vue";
 
 const store = useOrderStore()
 

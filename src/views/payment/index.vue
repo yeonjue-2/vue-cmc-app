@@ -15,13 +15,12 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {usePaymentStore} from '@/stores/payment'
-import {useOrderStore} from '@/stores/order'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { usePaymentStore } from '@/stores/payment'
+import { useOrderStore } from '@/stores/order'
 
 const route = useRoute()
-const router = useRouter()
 const orderId = route.params.orderId
 
 const paymentStore = usePaymentStore()
