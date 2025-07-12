@@ -11,7 +11,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="order in store.orders" :key="order.orderId">
+      <tr v-for="order in orderStore.orders" :key="order.orderId">
         <td>{{ formatDate(order.createdAt) }}</td>
         <td>
           <RouterLink :to="`/orders/${order.orderId}`">
@@ -23,31 +23,16 @@
       </tr>
       </tbody>
     </table>
-    <paging></paging>
-    <button @click="prevPage" :disabled="store.currentPage === 1">이전</button>
-    <span>페이지 {{ store.currentPage }} / {{ store.totalPages }}</span>
-    <button @click="nextPage" :disabled="store.currentPage + 1 >= store.totalPages">다음</button>
+    <paging v-model="orderStore"></paging>
   </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
 import { useOrderStore } from '@/stores/order'
-import Paging from "@/components/atom/Paging.vue";
+import Paging from '@/components/atom/Paging.vue'
 
-const store = useOrderStore()
-
-function nextPage() {
-  if (store.currentPage < store.totalPages) {
-    store.loadOrders(store.currentPage + 1)
-  }
-}
-
-function prevPage() {
-  if (store.currentPage > 1) {
-    store.loadOrders(store.currentPage - 1)
-  }
-}
+const orderStore = useOrderStore()
 
 function formatDate(iso) {
   return iso?.substring(0, 10) || '-'
@@ -58,6 +43,6 @@ function formatPrice(value) {
 }
 
 onMounted(() => {
-  store.loadOrders()
+  orderStore.fetchDataPages()
 })
 </script>

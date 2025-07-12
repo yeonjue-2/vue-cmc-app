@@ -4,9 +4,13 @@ import { createOrder, fetchOrders, fetchOrderById } from '@/api/order'
 
 export const useOrderStore = defineStore('order', () => {
     const orders = ref([])
-    const totalPages = ref(1)
-    const currentPage = ref(1)
     const selectedOrder = ref(null)
+
+    const pagination = ref({
+        page: 1,
+        totalElements: 0,
+        totalPages: 0
+    })
 
     async function submitOrder(orderData) {
         try {
@@ -18,15 +22,20 @@ export const useOrderStore = defineStore('order', () => {
         }
     }
 
-    async function loadOrders(page = 1, size = 20, orderStatus = null) {
+    async function loadOrders(orderStatus = null) {
+        const page = pagination.value.page
+        const size = 10
         try {
             const params = { page, size }
             if (orderStatus) params.orderStatus = orderStatus
 
             const response = await fetchOrders(params)
             orders.value = response.data.orders
-            totalPages.value = response.data.totalPages
-            currentPage.value = response.data.currentPage
+            pagination.value = {
+                page : response.data.currentPage,
+                totalElements: response.data.totalElements,
+                totalPages: response.data.totalPages
+            }
         } catch (e) {
             console.error('상품 로딩 실패:', e)
         }
@@ -45,13 +54,12 @@ export const useOrderStore = defineStore('order', () => {
     return {
         // state
         orders,
-        totalPages,
-        currentPage,
+        pagination,
         selectedOrder,
 
         // actions
         submitOrder,
-        loadOrders,
+        fetchDataPages: loadOrders,
         loadOrderById
     }
 })
