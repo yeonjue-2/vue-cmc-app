@@ -15,7 +15,7 @@
         <td>{{ formatDate(order.createdAt) }}</td>
         <td>
           <RouterLink :to="`/orders/${order.orderId}`">
-            {{ order.productId }}
+            {{ order.productName }}
           </RouterLink>
         </td>
         <td>{{ formatPrice(order.totalAmount) }} 원</td>
